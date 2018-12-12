@@ -1,7 +1,7 @@
 {
-  "name": "algorithms",
+  "name": "tddata-structures",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple data structures in Javascript, generously covered with unit tests",
   "main": "queueStack.js",
   "scripts": {
     "test": "jest"
