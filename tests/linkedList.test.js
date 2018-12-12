@@ -1,4 +1,4 @@
-import { createNode, createLinkedList } from "./linkedList";
+import { createNode, createLinkedList } from "../src/linkedList";
 
 describe("node", () => {
   test("node factory should create a node", () => {

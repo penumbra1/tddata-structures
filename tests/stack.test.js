@@ -1,4 +1,4 @@
-import createStack from "./stack";
+import createStack from "../src/stack";
 
 let s;
 

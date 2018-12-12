@@ -1,4 +1,4 @@
-import { createQueue, createPriorityQueue } from "./queue";
+import { createQueue, createPriorityQueue } from "../src/queue";
 
 const basicQueueTests = () => {
   describe("create, enqueue, dequeue", () => {
