@@ -64,8 +64,8 @@ describe("linkedist", () => {
     expect(l.length).toBe(1);
   });
 
-  test("pop should return undefined if the list is empty", () => {
-    expect(l.pop()).toBe(undefined);
+  test("pop should return null if the list is empty", () => {
+    expect(l.pop()).toBe(null);
   });
 
   test("pop should result in an empty list if length was 1", () => {
@@ -155,7 +155,20 @@ describe("linkedist", () => {
     expect(l.isEmpty).toBe(true);
   });
 
-  test("unshift should return undefined if list was empty", () => {
-    expect(l.unshift()).toBe(undefined);
+  test("unshift should return null if the list was empty", () => {
+    expect(l.unshift()).toBe(null);
+  });
+
+  test("find should return null if list is empty", () => {
+    expect(l.find(1)).toBe(null);
+  });
+
+  test("find should return the correct index", () => {
+    l.push(1);
+    l.push(2); // if values are repeated, it should get the first one
+    l.push(2);
+
+    expect(l.find(1)).toBe(0);
+    expect(l.find(2)).toBe(1);
   });
 });

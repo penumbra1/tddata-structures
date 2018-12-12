@@ -11,6 +11,9 @@ export function createLinkedList() {
     head: null,
     tail: null,
     length: 0,
+    get isEmpty() {
+      return this.length === 0;
+    },
     push(value) {
       const node = createNode(value);
 
@@ -25,7 +28,7 @@ export function createLinkedList() {
     },
     pop() {
       if (this.length === 0) {
-        return undefined;
+        return null;
       }
 
       const oldTail = this.tail;
@@ -60,7 +63,7 @@ export function createLinkedList() {
     },
     unshift() {
       if (this.length === 0) {
-        return undefined;
+        return null;
       }
 
       if (this.length === 1) {
@@ -94,8 +97,18 @@ export function createLinkedList() {
       current.next = node;
       this.length++;
     },
-    get isEmpty() {
-      return this.length === 0;
+    find(value) {
+      let current = this.head;
+      let index = 0;
+
+      while (current && current.value !== value) {
+        current = current.next;
+        index++;
+      }
+
+      if (current === null) return null;
+
+      return index;
     }
   };
 }
