@@ -14,6 +14,49 @@ export function createLinkedList() {
     get isEmpty() {
       return this.length === 0;
     },
+    get(index) {
+      if (index < 0 || index > this.length - 1) return null;
+
+      if (index === 0) return this.head;
+      if (index === this.length - 1) return this.tail;
+
+      let current = this.head;
+
+      let i = 0;
+      while (i !== index) {
+        current = current.next;
+        i++;
+      }
+
+      return current;
+    },
+    delete(index) {
+      if (index < 0 || index > this.length - 1) return null;
+
+      let currentIndex = 0;
+      let [previous, current, following] = [null, this.head, this.head.next];
+
+      while (currentIndex < index) {
+        [previous, current, following] = [current, following, following.next];
+        currentIndex++;
+      }
+
+      if (previous === null) {
+        // Current head will be removed
+        this.head = following;
+      } else {
+        previous.next = following;
+      }
+
+      if (following === null) {
+        // Current tail will be removed
+        this.tail = previous;
+      }
+
+      this.length--;
+
+      return current;
+    },
     push(value) {
       const node = createNode(value);
 
@@ -76,26 +119,37 @@ export function createLinkedList() {
 
       return oldHead;
     },
-    insertAfter(prevValue, value) {
+    insertAt(index, value) {
       const node = createNode(value);
 
-      let current = this.head;
+      if (index < 0 || index > this.length) return null;
 
-      while (current !== null && current.value !== prevValue) {
-        current = current.next;
-      }
+      let currentIndex = 0;
+      let [insertAfter, insertBefore] = [null, this.head];
 
-      if (current === null) {
-        throw new Error("Previous node not found");
-      }
-
-      if (current === this.tail) {
+      if (index === this.length) {
+        // No need to traverse the list - fast forward to the end:
+        currentIndex = this.length;
+        [insertAfter, insertBefore] = [this.tail, null];
         this.tail = node;
       }
 
-      node.next = current.next;
-      current.next = node;
+      while (currentIndex < index) {
+        [insertAfter, insertBefore] = [insertBefore, insertBefore.next];
+        currentIndex++;
+      }
+
+      if (insertAfter === null) {
+        this.head = node;
+      } else {
+        insertAfter.next = node;
+      }
+
+      node.next = insertBefore;
+
       this.length++;
+
+      return node;
     },
     find(value) {
       let current = this.head;
