@@ -1,32 +1,43 @@
 import { createNode, createGraph } from "../src/graph";
 
-describe("node", () => {
-  test("createNode should return a new node", () => {
-    const node = createNode(1);
-
-    expect(node).toEqual({
-      key: 1,
-      neighbors: [],
-      addNeighbor: expect.any(Function)
-    });
-  });
-
-  test("addNeighbor should add a node to the array of neighbors", () => {
-    const [node, neighbor] = [createNode(1), createNode(2)];
-
-    node.addNeighbor(neighbor);
-
-    expect(node.neighbors).toEqual([neighbor]);
-  });
-});
-
 // Stub out addNeighbor to compare objects with methods via .toEqual
 const mockNode = value => ({
   ...createNode(value),
-  addNeighbor: expect.any(Function)
+  addNeighbor: expect.any(Function),
+  print: expect.any(Function)
 });
 
-describe("graph", () => {
+describe("Node", () => {
+  let n;
+
+  beforeEach(() => {
+    n = createNode(1);
+  });
+
+  test("createNode should return a new node", () => {
+    expect(n).toEqual(mockNode(1));
+  });
+
+  test("addNeighbor should add a node to the array of neighbors", () => {
+    const neighbor = createNode(2);
+
+    n.addNeighbor(neighbor);
+
+    expect(n.neighbors).toEqual([neighbor]);
+  });
+
+  test("print should return the correct string representation", () => {
+    expect(n.print()).toBe("1");
+
+    n.addNeighbor(createNode(1));
+    expect(n.print()).toBe("1 => 1");
+
+    n.addNeighbor(createNode(2));
+    expect(n.print()).toBe("1 => 1 2");
+  });
+});
+
+describe("Graph", () => {
   let g;
 
   beforeEach(() => {
@@ -89,7 +100,7 @@ describe("graph", () => {
     expect(g.getNode(1).neighbors).toEqual([]);
   });
 
-  test("addEdge should set edge and neighbors correctly", () => {
+  test("addEdge should add edge and neighbors correctly", () => {
     let [one, two] = [g.addNode(1), g.addNode(2)];
 
     let edge = g.addEdge(1, 2);
@@ -104,5 +115,24 @@ describe("graph", () => {
 
     expect(edge).toBe("2-1");
     expect(two.neighbors).toEqual([one]);
+  });
+
+  test("print should return the correct string representation", () => {
+    expect(g.print()).toBe("");
+
+    g.addNode(1);
+    expect(g.print()).toBe("1");
+
+    g.addNode(2);
+    g.addNode(3);
+    g.addEdge(3, 1);
+    expect(g.print()).toMatchSnapshot();
+
+    g = createGraph(true);
+    g.addNode(1);
+    g.addNode(2);
+    g.addEdge(1, 2);
+
+    expect(g.print()).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 import { createNode, createLinkedList } from "../src/linkedList";
 
-describe("node", () => {
+describe("Node", () => {
   test("node factory should create a node", () => {
     const n = createNode(1);
 
@@ -8,7 +8,7 @@ describe("node", () => {
   });
 });
 
-describe("linkedList", () => {
+describe("LinkedList", () => {
   let l;
 
   beforeEach(() => {

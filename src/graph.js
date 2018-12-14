@@ -6,6 +6,12 @@ export function createNode(key) {
     neighbors,
     addNeighbor(node) {
       neighbors.push(node);
+    },
+    print() {
+      const neighborList = neighbors.map(n => n.key).join(" ");
+      const line = `${this.key}${neighborList && ` => ${neighborList}`}`;
+
+      return line;
     }
   };
 }
@@ -42,6 +48,9 @@ export function createGraph(directed = false) {
       edges.push(newEdge);
 
       return newEdge;
+    },
+    print() {
+      return nodes.map(node => node.print()).join("\n");
     }
   };
 }

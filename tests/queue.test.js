@@ -45,11 +45,11 @@ const basicQueueTests = () => {
   });
 };
 
-describe("simple queue", () => {
+describe("Simple queue", () => {
   basicQueueTests();
 });
 
-describe("priority queue", () => {
+describe("Priority queue", () => {
   basicQueueTests();
 
   let pq;
