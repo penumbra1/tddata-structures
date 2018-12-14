@@ -271,4 +271,18 @@ describe("linkedList", () => {
     expect(l.tail).toEqual(two);
     expect(l.length).toBe(2);
   });
+
+  test("print should return the correct string representation", () => {
+    expect(l.print()).toBe("");
+
+    l.push(1);
+
+    expect(l.print()).toBe("1");
+
+    l.push(2);
+    l.push(3);
+    l.push(4);
+
+    expect(l.print()).toMatchSnapshot();
+  });
 });

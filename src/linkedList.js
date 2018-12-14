@@ -163,6 +163,17 @@ export function createLinkedList() {
       if (current === null) return null;
 
       return index;
+    },
+    print() {
+      let current = this.head;
+      const values = [];
+
+      while (current) {
+        values.push(current.value);
+        current = current.next;
+      }
+
+      return values.join(" => ");
     }
   };
 }
