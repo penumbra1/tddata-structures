@@ -74,6 +74,14 @@ describe("Graph", () => {
     expect(g.edges).toEqual([]);
   });
 
+  test("addNode should do nothing and return null if the key is repeated", () => {
+    const [one, anotherOne] = [g.addNode(1), g.addNode(1)];
+
+    expect(anotherOne).toBe(null);
+    expect(g.nodes).toEqual([one]);
+    expect(g.edges).toEqual([]);
+  });
+
   test("getNode should return null if the key is not found", () => {
     expect(g.getNode()).toBe(null);
     expect(g.getNode(1)).toBe(null);
@@ -134,5 +142,62 @@ describe("Graph", () => {
     g.addEdge(1, 2);
 
     expect(g.print()).toMatchSnapshot();
+  });
+
+  test("traverseBreadth should perform a breadth-first traversal", () => {
+    g.addNode(1);
+    g.addNode(2);
+    g.addNode(3);
+    g.addNode(4);
+    g.addEdge(1, 2);
+    g.addEdge(1, 3); // 1 => 2 3
+    g.addEdge(2, 4); // 2 => 4
+    const visited = [];
+
+    g.traverseBreadth(1, node => visited.push(node.key));
+
+    expect(visited.join("")).toMatch(/^1(23|32)4$/);
+  });
+
+  test("traverseBreadth should throw an error is startingKey is not found", () => {
+    const visited = [];
+    const traversal = () =>
+      g.traverseBreadth(1, node => visited.push(node.key));
+
+    expect(traversal).toThrow();
+    expect(visited).toEqual([]);
+
+    g.addNode(2);
+
+    expect(traversal).toThrow();
+    expect(visited).toEqual([]);
+  });
+
+  test("traverseDepth should perform a depth-first traversal", () => {
+    g.addNode(1);
+    g.addNode(2);
+    g.addNode(3);
+    g.addNode(4);
+    g.addEdge(1, 2);
+    g.addEdge(1, 3); // 1 => 2 3
+    g.addEdge(2, 4); // 2 => 4
+    const visited = [];
+
+    g.traverseDepth(1, node => visited.push(node.key));
+
+    expect(visited.join("")).toMatch(/^1(24|42)3$/);
+  });
+
+  test("traverseDepth should throw an error is startingKey is not found", () => {
+    const visited = [];
+    const traversal = () => g.traverseDepth(1, node => visited.push(node.key));
+
+    expect(traversal).toThrow();
+    expect(visited).toEqual([]);
+
+    g.addNode(2);
+
+    expect(traversal).toThrow();
+    expect(visited).toEqual([]);
   });
 });
