@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`linkedList print should return the correct string representation 1`] = `"1 => 2 => 3 => 4"`;
