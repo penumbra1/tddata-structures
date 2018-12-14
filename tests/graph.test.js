@@ -97,13 +97,13 @@ describe("Graph", () => {
     expect(g.getNode(2)).toBe(two);
   });
 
-  test("addEdge should do nothing and return null is any node is not specified or found", () => {
+  test("addEdge should do nothing and throw if either node was not found", () => {
     g.addNode(1);
-    const edgeOne = g.addEdge(g.getNode(2));
-    const edgeTwo = g.addEdge(g.getNode(2), g.getNode(3));
+    const addEdgeOne = () => g.addEdge(1);
+    const addEdgeTwo = () => g.addEdge(2, 3);
 
-    expect(edgeOne).toBe(null);
-    expect(edgeTwo).toBe(null);
+    expect(addEdgeOne).toThrow("Node not found (key: undefined)");
+    expect(addEdgeTwo).toThrow("Node not found (key: 2)");
     expect(g.edges).toEqual([]);
     expect(g.getNode(1).neighbors).toEqual([]);
   });

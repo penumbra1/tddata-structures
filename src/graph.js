@@ -11,7 +11,7 @@ export function createNode(key) {
     },
     print() {
       const neighborList = neighbors.map(n => n.key).join(" ");
-      const line = `${this.key}${neighborList && ` => ${neighborList}`}`;
+      const line = `${this.key}${neighborList && " => "}${neighborList}`;
 
       return line;
     }
@@ -40,7 +40,11 @@ export function createGraph(directed = false) {
     addEdge(node1Key, node2Key) {
       const [node1, node2] = [this.getNode(node1Key), this.getNode(node2Key)];
 
-      if (!node1 || !node2) return null;
+      if (!node1 || !node2) {
+        throw new Error(
+          `Node not found (key: ${!node1 ? node1Key : node2Key})`
+        );
+      }
 
       node1.addNeighbor(node2);
       if (!this.directed) node2.addNeighbor(node1);
