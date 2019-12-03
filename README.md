@@ -1,3 +1,6 @@
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/penumbra1/tddata-structures.svg)](https://greenkeeper.io/)
+
 A few data structures implemented in JS via TDD:
 
 - Stack
